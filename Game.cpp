@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <Windows.h>
 
 void Game::processEvents()
 {
@@ -7,38 +8,81 @@ void Game::processEvents()
 	{
 		if (event.type == sf::Event::Closed)
 			window.close();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+			playerMoveDirection = 1;
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			playerMoveDirection = 2;
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			playerMoveDirection = 3;
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+			playerMoveDirection = 4;
+		else
+			playerMoveDirection = 0;
 	}
 
 }
 
-void Game::update()
+void Game::update(sf::Time deltaTime)
 {
+	sf::Vector2f pPos = player.getPosition();
+	switch (playerMoveDirection) {
+	case 1:
+		if (map.getElementByPosition(pPos.x/32, (pPos.y - 32)/32) == 1)
+			player.move(1);
+		break;
+	case 2:
+		if (map.getElementByPosition((pPos.x+32) / 32, pPos.y / 32) == 1)
+			player.move(2);
+		break;
+	case 3:
+		if (map.getElementByPosition(pPos.x / 32, (pPos.y + 32) / 32) == 1)
+			player.move(3);
+		break;
+	case 4:
+		if (map.getElementByPosition((pPos.x - 32) / 32, pPos.y / 32) == 1)
+			player.move(4);
+		break;
+	}
+
+	Sleep(deltaTime.asSeconds());
+
+
 }
 
 void Game::render()
 {
 	window.clear();
-	window.draw(mPlayer);
+	
 	map.draw(window);
+	player.draw(window);
 	window.display();
 }
 
 Game::Game()
 	:window(sf::VideoMode(960, 640), "RPG game"),
-	mPlayer(),
+	player(sf::Vector2f(6*32, 6*32)),
 	map(960, 640)
 {
-	mPlayer.setRadius(40.f);
-	mPlayer.setPosition(100.f, 100.f);
-	mPlayer.setFillColor(sf::Color::Cyan);
+
 }
 
 void Game::run()
 {
+
+	sf::Clock clock;
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+	
 	while (window.isOpen())
 	{
 		processEvents();
-		update();
+		timeSinceLastUpdate += clock.restart();
+		while (timeSinceLastUpdate > TimePerFrame)
+		{
+			timeSinceLastUpdate -= TimePerFrame;
+			processEvents();
+			update(TimePerFrame);
+		}
+
 		render();
 	}
 

@@ -31,6 +31,7 @@ private:
 public:
 	Map(int width, int height);
 	void draw(sf::RenderWindow&);
+	int getElementByPosition(int x, int y);
 
 };
 

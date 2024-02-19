@@ -28,3 +28,8 @@ void Map::draw(sf::RenderWindow& window)
 		}
 	}
 }
+
+int Map::getElementByPosition(int x, int y)
+{
+	return mask[y][x];
+}
