@@ -2,6 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include "Map.h"
 #include "Player.h"
+#include "Inventory.h"
+#include "Item.h"
+#include "Chest.h"
 
 class Game
 {
@@ -9,8 +12,11 @@ private:
 	sf::RenderWindow window;
 	Player player;
 	Map map;
+	Inventory inventory;
 	int playerMoveDirection=0;
 	const sf::Time TimePerFrame = sf::seconds(1.f/10.f);
+	vector<Item> items;
+
 
 	void processEvents();
 	void update(sf::Time deltaTime);

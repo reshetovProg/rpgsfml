@@ -7,7 +7,7 @@ void Game::processEvents()
 	while (window.pollEvent(event))
 	{
 		if (event.type == sf::Event::Closed)
-			window.close();
+			window.close();		
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 			playerMoveDirection = 1;
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
@@ -18,6 +18,14 @@ void Game::processEvents()
 			playerMoveDirection = 4;
 		else
 			playerMoveDirection = 0;
+
+		switch (event.type) {
+		case sf::Event::KeyReleased: // need to figure out a way of knowing which key it was so I don't stop both paddles
+			if (event.key.scancode == sf::Keyboard::Scan::I)
+				inventory.changeVisible();
+			break;
+		}
+		
 	}
 
 }
@@ -55,14 +63,27 @@ void Game::render()
 	
 	map.draw(window);
 	player.draw(window);
+
+	for (auto el : items) {
+		el.draw(window);
+	}
+
+	inventory.draw(window);
 	window.display();
 }
 
 Game::Game()
 	:window(sf::VideoMode(960, 640), "RPG game"),
 	player(sf::Vector2f(6*32, 6*32)),
-	map(960, 640)
+	map(960, 640),
+	inventory(sf::Vector2f(10 * 32, 10 * 32))
 {
+	vector<vector<int>> coords = map.getArrayCoordinatesByNum(2);
+	for (auto el : coords) {
+		items.push_back(Chest(sf::Vector2f(el[1]*32, el[0]*32)));
+		
+	}
+	
 
 }
 
