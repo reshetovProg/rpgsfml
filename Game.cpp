@@ -20,10 +20,63 @@ void Game::processEvents()
 			playerMoveDirection = 0;
 
 		switch (event.type) {
-		case sf::Event::KeyReleased: // need to figure out a way of knowing which key it was so I don't stop both paddles
-			if (event.key.scancode == sf::Keyboard::Scan::I)
-				inventory.changeVisible();
-			break;
+			case sf::Event::KeyReleased: // need to figure out a way of knowing which key it was so I don't stop both paddles
+				if (event.key.scancode == sf::Keyboard::Scan::I)
+					inventory.changeVisible();
+				if (event.key.scancode == sf::Keyboard::Scan::F) {
+
+					sf::Vector2f pPos = player.getPosition();
+					cout << "lasFaced: " << lastFaced << " : " << pPos.x/32 << " : "<<pPos.y/32 << endl;
+					switch (lastFaced) {
+					
+					case 1:
+						if (map.getElementByPosition(pPos.x / 32, (pPos.y - 32) / 32) > 1) {
+							for (int i = 0; i < items.size(); i++) {
+								if (items[i].getPosition().x == pPos.x &&
+									items[i].getPosition().y == pPos.y - 32) {
+									inventory.addItem(items[i]);
+									map.changeMask(pPos.x / 32, (pPos.y - 32) / 32, 1);
+								}
+							}
+						}
+						break;
+					case 2:
+						if (map.getElementByPosition((pPos.x + 32) / 32, pPos.y / 32) > 1) {
+							for (int i = 0; i < items.size(); i++) {
+								if (items[i].getPosition().x == pPos.x + 32 &&
+									items[i].getPosition().y == pPos.y) {
+									inventory.addItem(items[i]);
+									map.changeMask((pPos.x + 32) / 32, pPos.y / 32, 1);
+								}
+							}
+						}
+						break;
+					case 3:
+						if (map.getElementByPosition(pPos.x / 32, (pPos.y + 32) / 32) > 1) {
+							for (int i = 0; i < items.size(); i++) {
+								if (items[i].getPosition().x == pPos.x &&
+									items[i].getPosition().y == pPos.y + 32) {
+									inventory.addItem(items[i]);
+									map.changeMask(pPos.x / 32, (pPos.y + 32) / 32, 1);
+								}
+							}
+						}
+						break;
+					case 4:
+						if (map.getElementByPosition((pPos.x - 32) / 32, pPos.y / 32) > 1) {
+							for (int i = 0; i < items.size(); i++) {
+								if (items[i].getPosition().x == pPos.x - 32 &&
+									items[i].getPosition().y == pPos.y) {
+									inventory.addItem(items[i]);
+									map.changeMask((pPos.x - 32) / 32, pPos.y / 32, 1);
+								}
+							}
+						}
+						break;
+
+					}
+				}
+				break;
 		}
 		
 	}
@@ -51,8 +104,10 @@ void Game::update(sf::Time deltaTime)
 			player.move(4);
 		break;
 	}
+	if (playerMoveDirection != 0) lastFaced = playerMoveDirection;
 
 	Sleep(deltaTime.asSeconds());
+	
 
 
 }
@@ -82,6 +137,12 @@ Game::Game()
 	for (auto el : coords) {
 		items.push_back(Chest(sf::Vector2f(el[1]*32, el[0]*32)));
 		
+	}
+
+	vector<vector<int>> coords2 = map.getArrayCoordinatesByNum(3);
+	for (auto el : coords2) {
+		items.push_back(Potion(sf::Vector2f(el[1] * 32, el[0] * 32)));
+
 	}
 	
 

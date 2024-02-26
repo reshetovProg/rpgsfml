@@ -30,13 +30,24 @@ void Inventory::draw(sf::RenderWindow& window)
 		for (int i = 0; i < slotCount; i++) {
 			window.draw(slots[i]);
 		}
+
+		for (auto item : items) {
+			item.draw(window);
+		}
 	}
+
+	
 	
 }
 
 void Inventory::changeVisible()
 {
 	visible = !visible;
+}
+
+void Inventory::addItem(Item item)
+{
+
 }
 
 

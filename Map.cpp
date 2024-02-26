@@ -50,3 +50,10 @@ vector<vector<int>> Map::getArrayCoordinatesByNum(int num)
 	}
 	return coordinates;
 }
+
+void Map::changeMask(int x, int y, int value)
+{
+	cout << mask[y][x] << endl;
+	mask[y][x] = value;
+	cout << mask[y][x] << endl;
+}
