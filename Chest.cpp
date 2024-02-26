@@ -8,5 +8,7 @@ Chest::Chest(sf::Vector2f startPosition):
 	cout << "yes" << endl;
 }
 
+sf::Texture Chest::texture;
+
 
 

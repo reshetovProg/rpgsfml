@@ -4,6 +4,8 @@
 using namespace std;
 class Chest: public Item
 {
+private:
+	static sf::Texture texture;
 
 public:
 	Chest(sf::Vector2f startPosition);
