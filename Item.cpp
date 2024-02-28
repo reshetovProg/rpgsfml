@@ -15,3 +15,8 @@ sf::Vector2f Item::getPosition()
 {
 	return item.getPosition();
 }
+
+void Item::setPosition(sf::Vector2f pos)
+{
+	item.setPosition(pos);
+}

@@ -20,6 +20,8 @@ public:
 	void changeVisible();
 	void addItem(Item item);
 	void removeItem(int index);
+	int getCountItems();
+	int getSlotCount();
 	
 
 };

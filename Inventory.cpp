@@ -47,7 +47,22 @@ void Inventory::changeVisible()
 
 void Inventory::addItem(Item item)
 {
+	items.push_back(item);
+	for (int i = 0; i < items.size(); i++) {
+		items[i].setPosition(sf::Vector2f(slots[i].getPosition().x + 8,
+			slots[i].getPosition().y + 8));
+	}
 
+}
+
+int Inventory::getCountItems()
+{
+	return items.size();
+}
+
+int Inventory::getSlotCount()
+{
+	return slotCount;
 }
 
 

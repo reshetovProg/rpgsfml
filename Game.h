@@ -6,6 +6,7 @@
 #include "Item.h"
 #include "Chest.h"
 #include "Potion.h"
+#include "SystemWindow.h"
 
 class Game
 {
@@ -14,6 +15,7 @@ private:
 	Player player;
 	Map map;
 	Inventory inventory;
+	SystemWindow systemWindow;
 	int playerMoveDirection=0;
 	const sf::Time TimePerFrame = sf::seconds(1.f/10.f);
 	vector<Item> items;
@@ -24,8 +26,16 @@ private:
 	void update(sf::Time deltaTime);
 	void render();
 
+	bool static flag;
+	int static value;
+	thread th;
+
+	void static incrementer();
+
 public:
 	Game();
+	~Game();
 	void run();
+	
 };
 
