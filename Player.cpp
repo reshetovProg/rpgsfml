@@ -12,6 +12,7 @@ Player::Player(sf::Vector2f startPosition)
 void Player::draw(sf::RenderWindow& window)
 {
 	window.draw(player);
+	playerStats.drawHp(window);
 
 }
 
@@ -33,6 +34,22 @@ void Player::move(int direction)
 		break;
 	}
 	
+}
+
+void Player::addHp(int hp)
+{
+	playerStats.setHp(playerStats.getHp() + hp);
+}
+
+void Player::removeHp(int hp)
+{
+	playerStats.setHp(playerStats.getHp() - hp);
+}
+
+
+int Player::getHp(int hp)
+{
+	return playerStats.getHp();
 }
 
 sf::Vector2f Player::getPosition()

@@ -104,23 +104,31 @@ void Game::update(sf::Time deltaTime)
 	sf::Vector2f pPos = player.getPosition();
 	switch (playerMoveDirection) {
 	case 1:
-		if (map.getElementByPosition(pPos.x/32, (pPos.y - 32)/32) == 1)
+		if (map.getElementByPosition(pPos.x/32, (pPos.y - 32)/32) == 1 ||
+			map.getElementByPosition(pPos.x / 32, (pPos.y - 32) / 32) == 5)
 			player.move(1);
 		break;
 	case 2:
-		if (map.getElementByPosition((pPos.x+32) / 32, pPos.y / 32) == 1)
+		if (map.getElementByPosition((pPos.x+32) / 32, pPos.y / 32) == 1 ||
+			map.getElementByPosition((pPos.x + 32) / 32, pPos.y / 32) == 5)
 			player.move(2);
 		break;
 	case 3:
-		if (map.getElementByPosition(pPos.x / 32, (pPos.y + 32) / 32) == 1)
+		if (map.getElementByPosition(pPos.x / 32, (pPos.y + 32) / 32) == 1 ||
+			map.getElementByPosition(pPos.x / 32, (pPos.y + 32) / 32) == 5)
 			player.move(3);
 		break;
 	case 4:
-		if (map.getElementByPosition((pPos.x - 32) / 32, pPos.y / 32) == 1)
+		if (map.getElementByPosition((pPos.x - 32) / 32, pPos.y / 32) == 1 || 
+			map.getElementByPosition((pPos.x - 32) / 32, pPos.y / 32) == 5)
 			player.move(4);
 		break;
 	}
 	if (playerMoveDirection != 0) lastFaced = playerMoveDirection;
+
+	if (map.getElementByPosition(pPos.x / 32, pPos.y / 32) == 5) {
+		if(value%10==0) player.removeHp(5);
+	}
 
 	Sleep(deltaTime.asSeconds());
 	
